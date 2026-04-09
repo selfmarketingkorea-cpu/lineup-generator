@@ -11,12 +11,10 @@
   :root { --black: #0a0a0a; --white: #f5f3ee; --accent: #e8c547; --red: #d94f3d; --gray: #6b6b6b; --border: #2a2a2a; --green: #6fcf6f; }
   html, body { background: var(--black); color: var(--white); font-family: 'Noto Sans KR', sans-serif; min-height: 100vh; overflow-x: hidden; }
   body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events: none; z-index: 9999; opacity: 0.35; }
-
   header { display: flex; align-items: center; justify-content: space-between; padding: 24px 40px; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; background: rgba(10,10,10,0.92); backdrop-filter: blur(12px); }
   .logo { font-family: 'Bebas Neue', sans-serif; font-size: 32px; letter-spacing: 0.08em; color: var(--white); line-height: 1; }
   .logo span { color: var(--accent); }
   .header-tag { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--gray); letter-spacing: 0.15em; text-transform: uppercase; }
-
   main { max-width: 1200px; margin: 0 auto; padding: 60px 40px 100px; }
   .top-section { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; margin-bottom: 40px; }
   .left-panel { display: flex; flex-direction: column; gap: 24px; }
@@ -30,7 +28,6 @@
   .how-item.active .how-num { color: var(--accent); }
   .how-text { font-size: 13px; color: #888; line-height: 1.6; padding-top: 4px; }
   .how-item.active .how-text { color: var(--white); }
-
   .right-panel { display: flex; flex-direction: column; gap: 20px; }
   .upload-zone { border: 1px dashed #333; border-radius: 2px; min-height: 300px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; cursor: pointer; transition: border-color 0.2s, background 0.2s; position: relative; overflow: hidden; background: #0d0d0d; }
   .upload-zone:hover, .upload-zone.drag-over { border-color: var(--accent); background: #111; }
@@ -42,10 +39,8 @@
   .upload-text { text-align: center; }
   .upload-text strong { display: block; font-size: 15px; font-weight: 500; margin-bottom: 4px; }
   .upload-text span { font-size: 12px; color: var(--gray); font-family: 'JetBrains Mono', monospace; }
-
   #preview-wrap { display: none; }
   #preview-img { width: 100%; border-radius: 2px; display: block; }
-
   .action-wrap { display: none; flex-direction: column; gap: 10px; margin-top: 4px; }
   .preview-actions { display: flex; gap: 8px; }
   .btn-primary { flex: 1; background: var(--white); color: var(--black); border: none; padding: 14px 20px; font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 0.1em; cursor: pointer; border-radius: 2px; transition: background 0.15s, transform 0.1s; display: flex; align-items: center; justify-content: center; }
@@ -54,18 +49,15 @@
   .btn-primary:disabled { opacity: 0.3; cursor: not-allowed; }
   .btn-secondary { background: transparent; color: var(--gray); border: 1px solid var(--border); padding: 14px 16px; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; border-radius: 2px; transition: border-color 0.15s, color 0.15s; white-space: nowrap; }
   .btn-secondary:hover { border-color: var(--gray); color: var(--white); }
-
   .loading-bar { display: none; height: 2px; background: #1a1a1a; border-radius: 1px; overflow: hidden; }
   .loading-bar.active { display: block; }
   .loading-fill { height: 100%; background: var(--accent); animation: loading-anim 2.5s ease-in-out infinite; }
   @keyframes loading-anim { 0% { width: 0%; margin-left: 0%; } 50% { width: 60%; margin-left: 20%; } 100% { width: 0%; margin-left: 100%; } }
-
   .status-box { background: #111; border: 1px solid var(--border); border-radius: 2px; padding: 14px 16px; font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 1.8; color: var(--gray); display: none; white-space: pre-wrap; }
   .status-box.visible { display: block; }
   .status-box.analyzing { border-color: var(--accent); color: #ccc; }
   .status-box.success { border-color: var(--green); color: var(--green); }
   .status-box.error { border-color: var(--red); color: var(--red); }
-
   .results-section { display: none; }
   .results-section.visible { display: block; margin-top: 40px; }
   .results-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.2em; color: var(--accent); text-transform: uppercase; margin-bottom: 16px; }
@@ -79,14 +71,11 @@
   .result-card .card-error { width: 100%; aspect-ratio: 16/9; display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--red); background: #0d0d0d; padding: 16px; text-align: center; }
   .result-card .card-btn { width: 100%; background: transparent; color: var(--accent); border: none; border-top: 1px solid var(--border); padding: 10px; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer; transition: background 0.15s, color 0.15s; }
   .result-card .card-btn:hover { background: var(--accent); color: var(--black); }
-
   @keyframes spin { to { transform: rotate(360deg); } }
-
   .ticker { position: fixed; bottom: 0; left: 0; right: 0; height: 32px; background: var(--accent); color: var(--black); display: flex; align-items: center; overflow: hidden; z-index: 200; }
   .ticker-inner { display: flex; gap: 60px; animation: ticker-scroll 22s linear infinite; white-space: nowrap; }
   .ticker-inner span { font-family: 'Bebas Neue', sans-serif; font-size: 14px; letter-spacing: 0.15em; }
   @keyframes ticker-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-
   @media (max-width: 768px) {
     header { padding: 16px 20px; }
     main { padding: 32px 20px 80px; }
@@ -99,7 +88,7 @@
 <body>
 <header>
   <div class="logo">LINE<span>UP.</span></div>
-  <div class="header-tag">// AI 줄세우기 — Powered by OpenAI</div>
+  <div class="header-tag">// AI 줄세우기 — Nano Banana</div>
 </header>
 <main>
   <div class="top-section">
@@ -109,7 +98,7 @@
         <h1 class="panel-title">건물 사진<br/>하나면<br/><em>줄 완성</em></h1>
       </div>
       <p class="panel-desc">가게 사진을 올리면 AI가 4가지 버전을 동시에 생성해요. 마음에 드는 걸 골라서 다운로드하세요.<br/><br/>
-        <span style="color:var(--green);font-size:12px;">✓ OpenAI gpt-image-1 기술</span>
+        <span style="color:var(--green);font-size:12px;">✓ Google Gemini 나노바나나 기술</span>
       </p>
       <div class="how-list">
         <div class="how-item active" id="step-1"><div class="how-num">01</div><div class="how-text">문이 잘 보이는 가게/건물 사진을 올려주세요</div></div>
@@ -151,8 +140,8 @@
 </main>
 <div class="ticker">
   <div class="ticker-inner">
-    <span>LINEUP GENERATOR</span><span>·</span><span>AI 줄세우기</span><span>·</span><span>4장 동시 생성</span><span>·</span><span>POWERED BY OPENAI</span><span>·</span><span>배경 유지 + 인물 생성</span><span>·</span>
-    <span>LINEUP GENERATOR</span><span>·</span><span>AI 줄세우기</span><span>·</span><span>4장 동시 생성</span><span>·</span><span>POWERED BY OPENAI</span><span>·</span><span>배경 유지 + 인물 생성</span><span>·</span>
+    <span>LINEUP GENERATOR</span><span>·</span><span>AI 줄세우기</span><span>·</span><span>4장 동시 생성</span><span>·</span><span>POWERED BY GEMINI</span><span>·</span><span>배경 유지 + 인물 생성</span><span>·</span>
+    <span>LINEUP GENERATOR</span><span>·</span><span>AI 줄세우기</span><span>·</span><span>4장 동시 생성</span><span>·</span><span>POWERED BY GEMINI</span><span>·</span><span>배경 유지 + 인물 생성</span><span>·</span>
   </div>
 </div>
 <script>
@@ -182,9 +171,9 @@ function loadFile(file) {
   const reader = new FileReader();
   reader.onload = (e) => {
     uploadedDataUrl = e.target.result;
-    const _img = new Image();
-    _img.onload = () => { origW = _img.naturalWidth; origH = _img.naturalHeight; };
-    _img.src = e.target.result;
+    const img = new Image();
+    img.onload = () => { origW = img.naturalWidth; origH = img.naturalHeight; };
+    img.src = uploadedDataUrl;
     document.getElementById('preview-img').src = uploadedDataUrl;
     document.getElementById('upload-zone').style.display = 'none';
     document.getElementById('preview-wrap').style.display = 'block';
@@ -208,6 +197,30 @@ function resetAll() {
   setStep(1);
 }
 
+function cropToAspectRatio(dataUrl, w, h) {
+  return new Promise(resolve => {
+    const img = new Image();
+    img.onload = () => {
+      const srcW = img.naturalWidth, srcH = img.naturalHeight;
+      const targetRatio = w / h;
+      const srcRatio = srcW / srcH;
+      let cw, ch, cx, cy;
+      if (targetRatio > srcRatio) {
+        cw = srcW; ch = Math.round(srcW / targetRatio);
+        cx = 0; cy = Math.round((srcH - ch) / 2);
+      } else {
+        ch = srcH; cw = Math.round(srcH * targetRatio);
+        cx = Math.round((srcW - cw) / 2); cy = 0;
+      }
+      const canvas = document.createElement('canvas');
+      canvas.width = cw; canvas.height = ch;
+      canvas.getContext('2d').drawImage(img, cx, cy, cw, ch, 0, 0, cw, ch);
+      resolve(canvas.toDataURL('image/jpeg', 0.95));
+    };
+    img.src = dataUrl;
+  });
+}
+
 async function callAPI(base64, mimeType) {
   const res = await fetch(SCRIPT_URL, {
     method: 'POST',
@@ -215,36 +228,6 @@ async function callAPI(base64, mimeType) {
     body: JSON.stringify({ image: base64, mimeType: mimeType })
   });
   return await res.json();
-}
-
-function cropToAspectRatio(dataUrl, origW, origH) {
-  return new Promise(resolve => {
-    const img = new Image();
-    img.onload = () => {
-      const srcW = img.naturalWidth;
-      const srcH = img.naturalHeight;
-      const targetRatio = origW / origH;
-      const srcRatio = srcW / srcH;
-      let cropW, cropH, cropX, cropY;
-      if (targetRatio > srcRatio) {
-        cropW = srcW;
-        cropH = Math.round(srcW / targetRatio);
-        cropX = 0;
-        cropY = Math.round((srcH - cropH) / 2);
-      } else {
-        cropH = srcH;
-        cropW = Math.round(srcH * targetRatio);
-        cropX = Math.round((srcW - cropW) / 2);
-        cropY = 0;
-      }
-      const canvas = document.createElement('canvas');
-      canvas.width = cropW;
-      canvas.height = cropH;
-      canvas.getContext('2d').drawImage(img, cropX, cropY, cropW, cropH, 0, 0, cropW, cropH);
-      resolve(canvas.toDataURL('image/jpeg', 0.95));
-    };
-    img.src = dataUrl;
-  });
 }
 
 async function generate() {
@@ -274,13 +257,13 @@ async function generate() {
 
   let doneCount = 0;
   const promises = Array.from({ length: TOTAL }, (_, i) =>
-    callAPI(base64, mimeType).then(data => {
+    callAPI(base64, mimeType).then(async data => {
       doneCount++;
       if (data.error || !data.image) {
         cards[i].innerHTML = '<div class="card-error">// VER.' + (i+1) + ' 생성 실패<br/>' + (data.error || '오류') + '</div>';
       } else {
         const rawUrl = 'data:' + (data.mimeType || 'image/png') + ';base64,' + data.image;
-        const croppedUrl = await cropToAspectRatio(rawUrl, origW, origH);
+        const croppedUrl = origW && origH ? await cropToAspectRatio(rawUrl, origW, origH) : rawUrl;
         cards[i].innerHTML =
           '<div class="card-badge">VER.' + (i+1) + '</div>' +
           '<img src="' + croppedUrl + '" alt="결과 ' + (i+1) + '"/>' +
