@@ -13,17 +13,17 @@ export default async function handler(req, res) {
 
     let doorDesc = '';
     if (doorInfo) {
-      doorDesc = `CRITICAL RULE - DO NOT TOUCH THE DOOR AREA: The entrance door is located at ${doorInfo.pct}% from the left edge (${doorInfo.hPos}). You must NEVER place any person, body part, shadow, or any element in front of or overlapping the entrance door area. The door must remain completely visible and unobstructed exactly as in the original photo. `;
+      doorDesc = `The entrance door is at ${doorInfo.pct}% from the left (${doorInfo.hPos}). Keep this area COMPLETELY EMPTY — no people, no body parts, no shadows anywhere near the door. `;
     }
 
     let queueDesc = '';
     if (queueInfo) {
-      queueDesc = `Place ALL people concentrated around ${queueInfo.pct}% from the left edge (${queueInfo.hPos}) along the building wall. `;
+      queueDesc = `Place ALL people around ${queueInfo.pct}% from the left (${queueInfo.hPos}) along the building wall. `;
     } else {
       queueDesc = 'Place people along the building wall beside the door. ';
     }
 
-    const prompt = `Realistic photo edit. ONLY add people. Do NOT change the background whatsoever. ${doorDesc}${queueDesc}Add a crowd of Korean young adults gathered outside this store waiting to enter. People stand in small tight groups of 2 to 4 people. Each group huddles together in a loose circle or cluster, facing each other and chatting, while gradually oriented toward the entrance. Groups packed closely together forming one continuous dense crowd. People hold phones, bags, drinks. Relaxed natural body language. No rigid poses. CRITICAL: People must be realistically scaled to match the perspective and depth of the scene. People further from the camera must appear smaller. People must look like they are standing ON the ground, not floating. Their feet must touch the ground naturally. No person should appear larger than the building elements around them. All Korean young adults, varied outfits, hairstyles, heights. Lighting and shadows must match the original photo exactly. Faces blurred.`;
+    const prompt = `Realistic photo edit. ONLY add people. Do NOT change the background. Do NOT alter colors, lighting, or any part of the original scene. ${doorDesc}${queueDesc}Add Korean young adults waiting outside in small groups of 2 to 4 people. Each group huddles together facing each other and chatting, oriented toward the entrance. Groups packed closely together. People hold phones, bags. Relaxed natural poses. People must be realistically scaled to the scene — match the perspective exactly, people further away appear smaller. Feet must touch the ground naturally. All Korean young adults, varied outfits and hairstyles. Lighting matches original exactly. Faces blurred.`;
 
     const imageBuffer = Buffer.from(image, 'base64');
     const blob = new Blob([imageBuffer], { type: mimeType || 'image/jpeg' });
