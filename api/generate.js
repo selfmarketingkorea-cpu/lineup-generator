@@ -159,6 +159,7 @@
 const SCRIPT_URL = '/api/generate';
 const TOTAL = 4;
 let uploadedDataUrl = null;
+let origW = 0, origH = 0;
 
 function setStep(n) {
   for (let i = 1; i <= 4; i++) {
@@ -181,6 +182,9 @@ function loadFile(file) {
   const reader = new FileReader();
   reader.onload = (e) => {
     uploadedDataUrl = e.target.result;
+    const _img = new Image();
+    _img.onload = () => { origW = _img.naturalWidth; origH = _img.naturalHeight; };
+    _img.src = e.target.result;
     document.getElementById('preview-img').src = uploadedDataUrl;
     document.getElementById('upload-zone').style.display = 'none';
     document.getElementById('preview-wrap').style.display = 'block';
@@ -211,6 +215,36 @@ async function callAPI(base64, mimeType) {
     body: JSON.stringify({ image: base64, mimeType: mimeType })
   });
   return await res.json();
+}
+
+function cropToAspectRatio(dataUrl, origW, origH) {
+  return new Promise(resolve => {
+    const img = new Image();
+    img.onload = () => {
+      const srcW = img.naturalWidth;
+      const srcH = img.naturalHeight;
+      const targetRatio = origW / origH;
+      const srcRatio = srcW / srcH;
+      let cropW, cropH, cropX, cropY;
+      if (targetRatio > srcRatio) {
+        cropW = srcW;
+        cropH = Math.round(srcW / targetRatio);
+        cropX = 0;
+        cropY = Math.round((srcH - cropH) / 2);
+      } else {
+        cropH = srcH;
+        cropW = Math.round(srcH * targetRatio);
+        cropX = Math.round((srcW - cropW) / 2);
+        cropY = 0;
+      }
+      const canvas = document.createElement('canvas');
+      canvas.width = cropW;
+      canvas.height = cropH;
+      canvas.getContext('2d').drawImage(img, cropX, cropY, cropW, cropH, 0, 0, cropW, cropH);
+      resolve(canvas.toDataURL('image/jpeg', 0.95));
+    };
+    img.src = dataUrl;
+  });
 }
 
 async function generate() {
@@ -245,11 +279,12 @@ async function generate() {
       if (data.error || !data.image) {
         cards[i].innerHTML = '<div class="card-error">// VER.' + (i+1) + ' 생성 실패<br/>' + (data.error || '오류') + '</div>';
       } else {
-        const dataUrl = 'data:' + (data.mimeType || 'image/png') + ';base64,' + data.image;
+        const rawUrl = 'data:' + (data.mimeType || 'image/png') + ';base64,' + data.image;
+        const croppedUrl = await cropToAspectRatio(rawUrl, origW, origH);
         cards[i].innerHTML =
           '<div class="card-badge">VER.' + (i+1) + '</div>' +
-          '<img src="' + dataUrl + '" alt="결과 ' + (i+1) + '"/>' +
-          '<button class="card-btn" onclick="downloadImage(\'' + dataUrl + '\', ' + (i+1) + ')">다운로드</button>';
+          '<img src="' + croppedUrl + '" alt="결과 ' + (i+1) + '"/>' +
+          '<button class="card-btn" onclick="downloadImage(\'' + croppedUrl + '\', ' + (i+1) + ')">다운로드</button>';
       }
       showStatus('analyzing', '// ' + doneCount + '/' + TOTAL + '장 완성...\n// 나머지 생성 중...');
     }).catch(err => {
