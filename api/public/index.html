@@ -411,23 +411,6 @@ async function prepareAndSend(originalDataUrl, doorInfo, queueInfo) {
 
 // 마스크는 좌표 정보로만 전달 (이미지 합성 없음)
 
-// 결과 이미지를 원본 비율로 복원
-async function restoreAspectRatio(base64, mimeType, origW, origH) {
-  return new Promise((resolve) => {
-    const img = new Image();
-    img.onload = () => {
-      const canvas = document.createElement('canvas');
-      canvas.width = origW;
-      canvas.height = origH;
-      const ctx = canvas.getContext('2d');
-      // 결과 이미지를 원본 크기에 맞게 그리기
-      ctx.drawImage(img, 0, 0, origW, origH);
-      resolve(canvas.toDataURL('image/jpeg', 0.95));
-    };
-    img.src = 'data:' + (mimeType || 'image/png') + ';base64,' + base64;
-  });
-}
-
 async function generate() {
   if (!uploadedDataUrl) return;
 
@@ -471,12 +454,11 @@ async function generate() {
       if (data.error || !data.image) {
         cards[i].innerHTML = '<div class="card-error">// VER.' + (i+1) + ' 생성 실패<br/>' + (data.error || '오류') + '</div>';
       } else {
-        // 원본 비율로 복원
-        const restoredUrl = await restoreAspectRatio(data.image, data.mimeType, originalWidth, originalHeight);
+        const dataUrl = 'data:' + (data.mimeType || 'image/png') + ';base64,' + data.image;
         cards[i].innerHTML =
           '<div class="card-badge">VER.' + (i+1) + '</div>' +
-          '<img src="' + restoredUrl + '" alt="결과 ' + (i+1) + '"/>' +
-          '<button class="card-btn" onclick="downloadImage(\'' + restoredUrl + '\', ' + (i+1) + ')">다운로드</button>';
+          '<img src="' + dataUrl + '" alt="결과 ' + (i+1) + '"/>' +
+          '<button class="card-btn" onclick="downloadImage(\'' + dataUrl + '\', ' + (i+1) + ')">다운로드</button>';
       }
       showStatus('analyzing', '// ' + doneCount + '/' + TOTAL + '장 완성...\n// 나머지 생성 중...');
     }).catch(err => {
